@@ -31,13 +31,13 @@ jobs:
           Rename-Item sonar-scanner-5.0.1.3006-windows sonar-scanner
 
 
-      - name: Create sonar-project.properties
+      # ✅ replace TEMP_KEY with repo name
+      - name: Update project key
         shell: powershell
         run: |
-          echo sonar.projectKey=${{ github.event.repository.name }} > sonar-project.properties
-          echo sonar.sources=. >> sonar-project.properties
-          echo sonar.host.url=http://18.212.15.84:9000 >> sonar-project.properties
-          echo sonar.login=YOUR_TOKEN >> sonar-project.properties
+          (Get-Content sonar-project.properties) `
+          -replace "TEMP_KEY", "${{ github.event.repository.name }}" `
+          | Set-Content sonar-project.properties
 
 
       - name: Run Scanner
