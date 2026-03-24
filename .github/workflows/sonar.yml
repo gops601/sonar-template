@@ -12,10 +12,12 @@ jobs:
 
     steps:
 
+      # 1. Checkout repo
       - name: Checkout
         uses: actions/checkout@v4
 
 
+      # 2. Setup Java (required)
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -23,6 +25,7 @@ jobs:
           java-version: 17
 
 
+      # 3. Download SonarScanner (Windows runner)
       - name: Download SonarScanner
         shell: powershell
         run: |
@@ -31,7 +34,8 @@ jobs:
           Rename-Item sonar-scanner-5.0.1.3006-windows sonar-scanner
 
 
+      # 4. Run scan → SonarQube in EC2 Ubuntu
       - name: Run SonarQube Scan
         shell: powershell
         run: |
-          cmd /c sonar-scanner\bin\sonar-scanner.bat -Dsonar.projectKey=student-project -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          cmd /c sonar-scanner\bin\sonar-scanner.bat -Dsonar.projectKey=student-project -Dsonar.sources=. -Dsonar.host.url=http://18.212.15.84:9000 -Dsonar.login=${{ secrets.SONAR_TOKEN }}
