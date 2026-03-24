@@ -1,0 +1,30 @@
+name: SonarQube Scan
+
+on:
+  push:
+
+jobs:
+  sonar:
+    runs-on: self-hosted
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Download SonarScanner
+        run: |
+          curl -sSLo scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-windows.zip
+          powershell Expand-Archive scanner.zip
+
+      - name: Run Scan
+        run: |
+          ./sonar-scanner-*/bin/sonar-scanner.bat ^
+          -Dsonar.projectKey=${{ github.repository }} ^
+          -Dsonar.sources=. ^
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} ^
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
