@@ -12,15 +12,20 @@ jobs:
 
     steps:
 
+      # Step 1 — Checkout code
       - name: Checkout
         uses: actions/checkout@v4
 
+
+      # Step 2 — Setup Java (required for Sonar)
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
+
+      # Step 3 — Download SonarScanner (Windows PowerShell)
       - name: Download SonarScanner
         shell: powershell
         run: |
@@ -28,11 +33,9 @@ jobs:
           Expand-Archive scanner.zip -DestinationPath .
           Rename-Item sonar-scanner-5.0.1.3006-windows sonar-scanner
 
+
+      # Step 4 — Run SonarQube Scan (single line → no error)
       - name: Run SonarQube Scan
         shell: powershell
         run: |
-          .\sonar-scanner\bin\sonar-scanner.bat `
-          -Dsonar.projectKey=student-project `
-          -Dsonar.sources=. `
-          -Dsonar.host.url=http://localhost:9000 `
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          .\sonar-scanner\bin\sonar-scanner.bat -Dsonar.projectKey=student-project -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${{ secrets.SONAR_TOKEN }}
