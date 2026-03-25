@@ -12,11 +12,9 @@ jobs:
 
     steps:
 
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
@@ -24,8 +22,8 @@ jobs:
       - name: Sonar Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: sqa_5d72fd0be22e367fbfc1c4b6f6e0a523e632c69b
+          SONAR_HOST_URL: http://3.89.123.250:9000/
         with:
           args: >
             -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
