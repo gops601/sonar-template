@@ -8,42 +8,24 @@ on:
 
 jobs:
   sonar:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
 
-      # Checkout repo
       - name: Checkout
         uses: actions/checkout@v4
 
-
-      # Setup Java
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
-
-      # Download SonarScanner (correct URL)
-      - name: Download Scanner
-        shell: powershell
-        run: |
-          Invoke-WebRequest https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-windows.zip -OutFile scanner.zip
-          Expand-Archive scanner.zip -DestinationPath .
-          Rename-Item sonar-scanner-5.0.1.3006-windows sonar-scanner
-
-
-      # Replace TEMP_KEY with repo name
-      - name: Update project key
-        shell: powershell
-        run: |
-          (Get-Content sonar-project.properties) `
-          -replace "TEMP_KEY", "${{ github.event.repository.name }}" `
-          | Set-Content sonar-project.properties
-
-
-      # Run scanner
-      - name: Run Scanner
-        shell: cmd
-        run: sonar-scanner\bin\sonar-scanner.bat
+      - name: Sonar Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        with:
+          args: >
+            -Dsonar.projectKey=${{ github.repository }}
+            -Dsonar.sources=.
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
