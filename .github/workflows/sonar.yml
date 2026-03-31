@@ -23,7 +23,7 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: sqa_5d72fd0be22e367fbfc1c4b6f6e0a523e632c69b
-          SONAR_HOST_URL: http://3.89.123.250:9000/
+          SONAR_HOST_URL: http://54.162.248.144:9000/
         with:
           args: >
             -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
