@@ -130,7 +130,7 @@ jobs:
           args: >
             -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
             -Dsonar.sources=src
-            -Dsonar.login=squ_16777eb9d789d36e88ea27cf47a7759f9cb96662
+            -Dsonar.login=squ_a59d4fc58ecbab4929240640afa96a317bfd9a12
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.exclusions=node_modules/**,build/**,dist/**
 
@@ -146,7 +146,7 @@ jobs:
           args: >
             -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
             -Dsonar.sources=.
-            -Dsonar.login=squ_9ad1947444e0ead9948ca35997dd7dd0239d2084
+            -Dsonar.login=squ_a59d4fc58ecbab4929240640afa96a317bfd9a12
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.exclusions=**/__pycache__/**,**/*.pyc,node_modules/**
 
@@ -162,4 +162,4 @@ jobs:
           args: >
             -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
             -Dsonar.sources=.
-            -Dsonar.login=squ_16777eb9d789d36e88ea27cf47a7759f9cb96662
+            -Dsonar.login=squ_a59d4fc58ecbab4929240640afa96a317bfd9a12
